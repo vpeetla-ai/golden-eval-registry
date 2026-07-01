@@ -1,0 +1,12 @@
+{
+  "registry_version": "0.1.0",
+  "owner": "vpeetla-ai",
+  "description": "Golden eval fixtures for governed agent systems",
+  "suites": [
+    "enterprise_rag_golden_v1",
+    "loopforge_benchmark_v1",
+    "loopforge_repo_fix_v1",
+    "aegisloop_mission_gates_v1",
+    "content_factory_graph_v1"
+  ]
+}

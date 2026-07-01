@@ -1,0 +1,11 @@
+{
+  "suite_id": "content_factory.graph_v1",
+  "version": "1.0.0",
+  "kind": "graph_hitl",
+  "locked": true,
+  "consumer_repos": ["ai-content-factory"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "requires_hitl_before_publish": true
+  }
+}

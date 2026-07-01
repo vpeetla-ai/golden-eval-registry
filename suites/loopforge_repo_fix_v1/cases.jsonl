@@ -1,0 +1,1 @@
+{"id":"loopforge-repo-fix-001","kind":"repo_fix","fixture_ref":"repos/buggy_calc","input":{"task":"Find and fix bugs in this repo","mode":"bugfix"},"expect":{"pytest_passed":true,"expected_patches":[{"path":"calc.py"}],"branch_prefix":"loopforge/fix-"},"thresholds":{"min_coverage_pct":80}}

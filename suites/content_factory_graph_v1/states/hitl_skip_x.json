@@ -1,0 +1,15 @@
+{
+  "topic": "AI agent governance",
+  "platforms": ["linkedin", "x"],
+  "run_id": "golden-acf-002",
+  "platform_drafts": {
+    "linkedin": {"content": "Draft for LinkedIn"},
+    "x": {"content": "Short post"}
+  },
+  "hitl_approved": {
+    "linkedin": {"approved": true},
+    "x": {"approved": false, "skip": true}
+  },
+  "hitl_edits": {},
+  "messages": []
+}

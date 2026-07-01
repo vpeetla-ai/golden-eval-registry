@@ -1,0 +1,13 @@
+{
+  "suite_id": "loopforge.benchmark_v1",
+  "version": "1.0.0",
+  "kind": "harness_qa",
+  "locked": true,
+  "consumer_repos": ["loop-engine-agent-platform"],
+  "cases": "cases.jsonl",
+  "corpus": "corpus/",
+  "thresholds": {
+    "min_recall": 0.35,
+    "min_faithfulness": 0.45
+  }
+}

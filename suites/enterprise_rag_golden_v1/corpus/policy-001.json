@@ -1,0 +1,14 @@
+{
+  "document_id": "policy-001",
+  "tenant_id": "acme",
+  "title": "Document policy-001",
+  "body": "Production RAG requires hybrid retrieval, grounded citations, access control, evaluation, and human approval for high-risk actions.",
+  "uri": "https://docs.example/policy-001",
+  "owner": "knowledge-team",
+  "classification": "internal",
+  "allowed_groups": ["engineering"],
+  "metadata": {
+    "effective_date": "2026-01-01",
+    "domain": "ai"
+  }
+}

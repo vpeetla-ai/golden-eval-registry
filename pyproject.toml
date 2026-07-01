@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "golden-eval-registry"
+version = "0.1.0"
+description = "Versioned golden eval fixtures for the vpeetla-ai governed agent stack"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Venkata Peetla" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+golden-eval-validate = "golden_eval_registry.validate:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,12 @@
+{
+  "suite_id": "loopforge.repo_fix_v1",
+  "version": "1.0.0",
+  "kind": "repo_fix",
+  "locked": true,
+  "consumer_repos": ["loop-engine-agent-platform"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "pytest_passed": true,
+    "min_coverage_pct": 80
+  }
+}

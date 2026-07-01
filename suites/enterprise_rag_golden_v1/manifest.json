@@ -1,0 +1,13 @@
+{
+  "suite_id": "enterprise_rag.golden_v1",
+  "version": "1.0.0",
+  "kind": "rag_answer",
+  "locked": true,
+  "consumer_repos": ["enterprise_rag_platform", "aegisloop-agentops-workbench"],
+  "cases": "cases.jsonl",
+  "corpus": "corpus/policy-001.json",
+  "thresholds": {
+    "grounded_rate": 1.0,
+    "citation_coverage": 1.0
+  }
+}

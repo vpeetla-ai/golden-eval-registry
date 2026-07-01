@@ -1,0 +1,11 @@
+{
+  "suite_id": "aegisloop.mission_gates_v1",
+  "version": "1.0.0",
+  "kind": "mission_gate",
+  "locked": true,
+  "consumer_repos": ["aegisloop-agentops-workbench"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "quality_score_min": 90
+  }
+}
