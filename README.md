@@ -56,6 +56,7 @@ pytest -q
 | `repo_fix` | LoopForge repo-fix loop |
 | `mission_gate` | `aegisloop-agentops-workbench` |
 | `graph_hitl` | `ai-content-factory` |
+| `brief_gate` | `sentinel-brief` |
 
 ## Trade-offs
 

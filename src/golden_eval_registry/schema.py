@@ -12,6 +12,7 @@ SUPPORTED_KINDS = {
     "repo_fix",
     "mission_gate",
     "graph_hitl",
+    "brief_gate",
 }
 
 

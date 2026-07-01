@@ -1,0 +1,13 @@
+{
+  "suite_id": "sentinel_brief.gate_v1",
+  "version": "1.0.0",
+  "kind": "brief_gate",
+  "locked": true,
+  "consumer_repos": ["sentinel-brief"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "min_delta_items": 3,
+    "min_citations": 3,
+    "requires_executive_summary": true
+  }
+}

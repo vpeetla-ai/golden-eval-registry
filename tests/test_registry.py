@@ -11,15 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_registry_validates() -> None:
     result = validate_registry(ROOT)
-    assert result["suites"] == 5
-    assert result["cases"] == 11
+    assert result["suites"] == 6
+    assert result["cases"] == 14
     assert "enterprise_rag_platform" in result["consumer_repos"]
     assert "loop-engine-agent-platform" in result["consumer_repos"]
+    assert "sentinel-brief" in result["consumer_repos"]
 
 
 def test_every_manifest_is_locked_and_supported() -> None:
     manifests = iter_manifests(ROOT)
-    assert len(manifests) == 5
+    assert len(manifests) == 6
     for path in manifests:
         manifest = parse_manifest(path)
         assert manifest.locked is True
