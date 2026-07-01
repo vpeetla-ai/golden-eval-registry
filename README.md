@@ -5,7 +5,9 @@
 
 Versioned golden fixtures for the **vpeetla-ai governed agent stack**.
 
-## Why this exists
+[Case study](https://github.com/vpeetla-ai/ai-architecture-portfolio/blob/main/case-studies/golden-eval-registry.md) · [Architecture](docs/ARCHITECTURE.md) · [Repo index](https://github.com/vpeetla-ai/ai-architecture-portfolio/blob/main/docs/REPO_INDEX.md)
+
+## What this is
 
 Live demos prove the systems run. Golden evals prove they do not regress.
 
