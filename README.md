@@ -1,5 +1,9 @@
 # Golden Eval Registry
 
+
+<!-- vpeetla-tech-stack:start -->
+[![YAML](https://img.shields.io/badge/YAML-CB171E?style=flat-square)]() [![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square)]() [![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square)]() [![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-181717?style=flat-square)]()
+<!-- vpeetla-tech-stack:end -->
 [![CI](https://github.com/vpeetla-ai/golden-eval-registry/actions/workflows/ci.yml/badge.svg)](https://github.com/vpeetla-ai/golden-eval-registry/actions/workflows/ci.yml)
 [![Org](https://img.shields.io/badge/GitHub-vpeetla--ai-blue)](https://github.com/vpeetla-ai)
 
