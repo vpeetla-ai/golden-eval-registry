@@ -25,6 +25,7 @@ class SuiteManifest:
     consumer_repos: list[str]
     cases_path: Path
     thresholds: dict[str, Any]
+    corpus_path: Path | None = None
 
 
 def parse_manifest(path: Path) -> SuiteManifest:
@@ -45,6 +46,7 @@ def parse_manifest(path: Path) -> SuiteManifest:
         raise ValueError(f"{path}: consumer_repos must be a list of strings")
 
     cases_path = (path.parent / str(data["cases"])).resolve()
+    corpus_path = (path.parent / str(data["corpus"])).resolve() if data.get("corpus") else None
     return SuiteManifest(
         suite_id=str(data["suite_id"]),
         version=str(data["version"]),
@@ -53,4 +55,5 @@ def parse_manifest(path: Path) -> SuiteManifest:
         consumer_repos=consumer_repos,
         cases_path=cases_path,
         thresholds=dict(data.get("thresholds") or {}),
+        corpus_path=corpus_path,
     )
