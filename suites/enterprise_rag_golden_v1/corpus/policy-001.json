@@ -2,7 +2,7 @@
   "document_id": "policy-001",
   "tenant_id": "acme",
   "title": "Document policy-001",
-  "body": "Production RAG requires hybrid retrieval, grounded citations, access control, evaluation, and human approval for high-risk actions.",
+  "body": "Production RAG requires hybrid retrieval, grounded citations, access control, evaluation, and human approval for high-risk actions. Requests to delete a user account or perform other destructive actions must be routed through human approval before execution.",
   "uri": "https://docs.example/policy-001",
   "owner": "knowledge-team",
   "classification": "internal",

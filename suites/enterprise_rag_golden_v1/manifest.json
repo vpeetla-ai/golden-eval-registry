@@ -1,6 +1,6 @@
 {
   "suite_id": "enterprise_rag.golden_v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "kind": "rag_answer",
   "locked": true,
   "consumer_repos": ["enterprise_rag_platform", "aegisloop-agentops-workbench"],
