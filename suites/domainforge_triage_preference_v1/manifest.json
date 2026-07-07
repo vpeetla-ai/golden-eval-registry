@@ -1,0 +1,12 @@
+{
+  "suite_id": "domainforge.triage_preference_v1",
+  "version": "1.0.0",
+  "kind": "triage_preference",
+  "locked": true,
+  "consumer_repos": ["domainforge-rag-peft"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "chosen_beats_rejected_rate": 1.0,
+    "min_preference_pairs": 3
+  }
+}

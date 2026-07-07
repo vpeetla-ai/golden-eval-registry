@@ -13,6 +13,7 @@ SUPPORTED_KINDS = {
     "mission_gate",
     "graph_hitl",
     "brief_gate",
+    "triage_preference",
 }
 
 

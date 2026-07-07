@@ -41,6 +41,7 @@ suites/
   loopforge_repo_fix_v1/
   aegisloop_mission_gates_v1/
   content_factory_graph_v1/
+  domainforge_triage_preference_v1/
 src/golden_eval_registry/
   schema.py
   validate.py
@@ -71,6 +72,7 @@ provider-specific client code.
 | `mission_gate` | `aegisloop-agentops-workbench` | ✅ `aegisloop-agentops-workbench`'s CI checks this repo out and runs the suite against the real `runtime.evaluate()` gate, failing the build on regression |
 | `graph_hitl` | `ai-content-factory` | ❌ Fixture validation only — no scorer yet |
 | `brief_gate` | `sentinel-brief` | ❌ Fixture validation only — no scorer yet |
+| `triage_preference` | `domainforge-rag-peft` | ❌ Fixture validation only — scorer planned for S4 CI gate |
 
 See [ADR-0002](docs/adr/0002-real-scorer-and-first-ci-gate.md) — the first suite ever actually
 executed (`enterprise_rag_golden_v1`) immediately surfaced a real bug in its own fixture,
