@@ -90,6 +90,20 @@ def test_score_suite_reports_missing_actual_as_failure() -> None:
     assert len(result.failures) == len(cases)
 
 
+def test_triage_preference_scorer_passes_when_chosen_beats_rejected() -> None:
+    manifest, cases = _suite("domainforge.triage_preference_v1")
+    case = cases[0]
+    result = score_case(manifest.kind, case, {"chosen_beats_rejected": True})
+    assert result.passed, result.detail
+
+
+def test_triage_preference_scorer_fails_when_chosen_loses() -> None:
+    manifest, cases = _suite("domainforge.triage_preference_v1")
+    case = cases[0]
+    result = score_case(manifest.kind, case, {"chosen_beats_rejected": False, "detail": "bad pair"})
+    assert not result.passed
+
+
 def test_score_case_raises_for_unimplemented_kind() -> None:
     manifest, cases = _suite("loopforge.benchmark_v1")
     try:

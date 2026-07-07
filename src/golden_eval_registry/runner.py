@@ -111,7 +111,22 @@ def _score_mission_gate(case: dict[str, Any], actual: dict[str, Any]) -> CaseRes
     return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
 
 
+def _score_triage_preference(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
+    expect = case.get("expect", {})
+    case_id = str(case["id"])
+    if not expect.get("chosen_beats_rejected", True):
+        return CaseResult(case_id, True, "ok")
+    if not actual.get("chosen_beats_rejected"):
+        return CaseResult(
+            case_id,
+            False,
+            actual.get("detail") or "chosen did not beat rejected on alignment score",
+        )
+    return CaseResult(case_id, True, "ok")
+
+
 _SCORERS: dict[str, Callable[[dict[str, Any], dict[str, Any]], CaseResult]] = {
     "rag_answer": _score_rag_answer,
     "mission_gate": _score_mission_gate,
+    "triage_preference": _score_triage_preference,
 }
