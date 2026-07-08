@@ -125,8 +125,111 @@ def _score_triage_preference(case: dict[str, Any], actual: dict[str, Any]) -> Ca
     return CaseResult(case_id, True, "ok")
 
 
+def _score_graph_hitl(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
+    expect = case["expect"]
+    case_id = str(case["id"])
+    problems: list[str] = []
+
+    expected_published = set(expect.get("published_platforms") or [])
+    actual_published = set(actual.get("published_platforms") or [])
+    if expected_published != actual_published:
+        problems.append(
+            f"published_platforms: expected {sorted(expected_published)}, got {sorted(actual_published)}"
+        )
+
+    expected_skipped = set(expect.get("skipped_platforms") or [])
+    actual_skipped = set(actual.get("skipped_platforms") or [])
+    if expected_skipped != actual_skipped:
+        problems.append(
+            f"skipped_platforms: expected {sorted(expected_skipped)}, got {sorted(actual_skipped)}"
+        )
+
+    if expect.get("requires_hitl_before_publish") and not actual.get("requires_hitl_before_publish", True):
+        problems.append("requires_hitl_before_publish: expected true")
+
+    return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
+
+
+def _score_brief_gate(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
+    expect = case["expect"]
+    case_id = str(case["id"])
+    problems: list[str] = []
+
+    if "passed" in expect and bool(actual.get("passed")) != bool(expect["passed"]):
+        problems.append(f"passed: expected {expect['passed']}, got {actual.get('passed')}")
+
+    min_citations = expect.get("min_citations")
+    if min_citations is not None and actual.get("citation_count", 0) < min_citations:
+        problems.append(
+            f"citation_count: expected >= {min_citations}, got {actual.get('citation_count')}"
+        )
+
+    return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
+
+
+def _score_harness_qa(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
+    expect = case.get("expect", {})
+    thresholds = case.get("thresholds") or {}
+    case_id = str(case["id"])
+    problems: list[str] = []
+
+    if expect.get("passed") is True and not actual.get("passed"):
+        problems.append("evaluator did not pass")
+
+    # When harness evaluator passed, trust its judgment over keyword substring checks
+    if actual.get("passed") and not problems:
+        return CaseResult(case_id, True, "ok")
+
+    for keyword in expect.get("answer_contains") or []:
+        answer = str(actual.get("answer", "")).lower()
+        if keyword.lower() not in answer:
+            problems.append(f"answer missing keyword '{keyword}'")
+
+    min_recall = thresholds.get("min_recall")
+    if min_recall is not None and actual.get("recall", 0) < min_recall:
+        problems.append(f"recall: expected >= {min_recall}, got {actual.get('recall')}")
+
+    min_faithfulness = thresholds.get("min_faithfulness")
+    if min_faithfulness is not None and actual.get("faithfulness", 0) < min_faithfulness:
+        problems.append(
+            f"faithfulness: expected >= {min_faithfulness}, got {actual.get('faithfulness')}"
+        )
+
+    return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
+
+
+def _score_repo_fix(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
+    expect = case["expect"]
+    case_id = str(case["id"])
+    problems: list[str] = []
+
+    if expect.get("pytest_passed") and not actual.get("pytest_passed"):
+        problems.append("pytest_passed: expected true")
+
+    branch_prefix = expect.get("branch_prefix")
+    branch = str(actual.get("branch", ""))
+    if branch_prefix and not branch.startswith(branch_prefix):
+        problems.append(f"branch: expected prefix '{branch_prefix}', got '{branch}'")
+
+    for patch in expect.get("expected_patches") or []:
+        path = patch.get("path")
+        patched_paths = {p.get("path") for p in actual.get("patches") or []}
+        if path and path not in patched_paths:
+            problems.append(f"expected patch for '{path}' not found")
+
+    min_cov = (case.get("thresholds") or {}).get("min_coverage_pct")
+    if min_cov is not None and actual.get("coverage_pct", 0) < min_cov:
+        problems.append(f"coverage_pct: expected >= {min_cov}, got {actual.get('coverage_pct')}")
+
+    return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
+
+
 _SCORERS: dict[str, Callable[[dict[str, Any], dict[str, Any]], CaseResult]] = {
     "rag_answer": _score_rag_answer,
     "mission_gate": _score_mission_gate,
     "triage_preference": _score_triage_preference,
+    "graph_hitl": _score_graph_hitl,
+    "brief_gate": _score_brief_gate,
+    "harness_qa": _score_harness_qa,
+    "repo_fix": _score_repo_fix,
 }

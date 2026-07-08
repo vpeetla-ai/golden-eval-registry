@@ -1,6 +1,6 @@
 {
   "suite_id": "loopforge.benchmark_v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "kind": "harness_qa",
   "locked": true,
   "consumer_repos": ["loop-engine-agent-platform"],

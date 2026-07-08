@@ -67,12 +67,12 @@ provider-specific client code.
 | Kind | Consumer | Real CI gate? |
 |------|----------|----------------|
 | `rag_answer` | `enterprise_rag_platform`, AegisLoop import | ✅ `enterprise_rag_platform`'s CI checks this repo out and runs the suite against a real, isolated `RagPipeline`, failing the build on regression |
-| `harness_qa` | `loop-engine-agent-platform` | ❌ Fixture validation only — no scorer yet |
-| `repo_fix` | LoopForge repo-fix loop | ❌ Fixture validation only — no scorer yet |
+| `harness_qa` | `loop-engine-agent-platform` | ✅ CI runs `loopforge_benchmark_v1` against real `AgentHarness` + MockLLM |
+| `repo_fix` | LoopForge repo-fix loop | ✅ CI runs `loopforge_repo_fix_v1` against real `run_repo_fix` |
 | `mission_gate` | `aegisloop-agentops-workbench` | ✅ `aegisloop-agentops-workbench`'s CI checks this repo out and runs the suite against the real `runtime.evaluate()` gate, failing the build on regression |
-| `graph_hitl` | `ai-content-factory` | ❌ Fixture validation only — no scorer yet |
-| `brief_gate` | `sentinel-brief` | ❌ Fixture validation only — no scorer yet |
-| `triage_preference` | `domainforge-rag-peft` | ❌ Fixture validation only — scorer planned for S4 CI gate |
+| `graph_hitl` | `ai-content-factory` | ✅ CI runs `content_factory_graph_v1` against publish node behavior |
+| `brief_gate` | `sentinel-brief` | ✅ CI runs `sentinel_brief_gate_v1` against `evaluate_brief()` |
+| `triage_preference` | `domainforge-rag-peft` | ✅ CI runs `domainforge_triage_preference_v1` against alignment scorer |
 
 See [ADR-0002](docs/adr/0002-real-scorer-and-first-ci-gate.md) — the first suite ever actually
 executed (`enterprise_rag_golden_v1`) immediately surfaced a real bug in its own fixture,

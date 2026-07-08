@@ -105,9 +105,54 @@ def test_triage_preference_scorer_fails_when_chosen_loses() -> None:
 
 
 def test_score_case_raises_for_unimplemented_kind() -> None:
-    manifest, cases = _suite("loopforge.benchmark_v1")
     try:
-        score_case(manifest.kind, cases[0], actual={})
-        raise AssertionError("expected ValueError for an unimplemented scorer kind")
+        score_case("unknown_kind", {"id": "x", "expect": {}}, actual={})
+        raise AssertionError("expected ValueError for unknown kind")
     except ValueError as exc:
-        assert "harness_qa" in str(exc)
+        assert "unknown_kind" in str(exc)
+
+
+def test_graph_hitl_scorer_passes() -> None:
+    manifest, cases = _suite("content_factory.graph_v1")
+    case = cases[0]
+    actual = {
+        "published_platforms": ["linkedin", "x"],
+        "skipped_platforms": [],
+        "requires_hitl_before_publish": True,
+    }
+    result = score_case(manifest.kind, case, actual)
+    assert result.passed, result.detail
+
+
+def test_brief_gate_scorer_passes() -> None:
+    manifest, cases = _suite("sentinel_brief.gate_v1")
+    case = cases[0]
+    actual = {"passed": True, "citation_count": 3}
+    result = score_case(manifest.kind, case, actual)
+    assert result.passed, result.detail
+
+
+def test_harness_qa_scorer_passes() -> None:
+    manifest, cases = _suite("loopforge.benchmark_v1")
+    case = cases[0]
+    actual = {
+        "answer": "loop harness improves agents with evaluate memory",
+        "passed": True,
+        "recall": 0.5,
+        "faithfulness": 0.6,
+    }
+    result = score_case(manifest.kind, case, actual)
+    assert result.passed, result.detail
+
+
+def test_repo_fix_scorer_passes() -> None:
+    manifest, cases = _suite("loopforge.repo_fix_v1")
+    case = cases[0]
+    actual = {
+        "pytest_passed": True,
+        "branch": "loopforge/fix-abc",
+        "patches": [{"path": "calc.py"}],
+        "coverage_pct": 85,
+    }
+    result = score_case(manifest.kind, case, actual)
+    assert result.passed, result.detail
