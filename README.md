@@ -93,6 +93,17 @@ now fixed.
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
+## Interview map
+
+**Business function:** Versioned golden eval fixtures and scorers — portable CI gates across the stack.
+
+Staff+ prep crosswalk — [playbook](https://github.com/vpeetla-ai/ai-architect-interview-playbook) · [study UI](https://ai-architect-interview-playbook-9xs.vercel.app) · [Practice Arena](https://ai-architect-practice-arena.vercel.app) · [org matrix](https://github.com/vpeetla-ai/ai-architecture-portfolio/blob/main/docs/REPO_INTERVIEW_MAP.md). Only entries this repo honestly exercises.
+
+| Category | Entry | Fit |
+|----------|-------|-----|
+| System design | [LLM eval & observability](https://ai-architect-interview-playbook-9xs.vercel.app/q/ai-system-design/07-llm-evaluation-observability-platform) ([md](https://github.com/vpeetla-ai/ai-architect-interview-playbook/blob/main/ai-system-design/07-llm-evaluation-observability-platform.md)) | Primary — fixtures as release artifacts |
+| Trade-offs | [Build vs buy shared services](https://ai-architect-interview-playbook-9xs.vercel.app/q/scalability-governance-tradeoffs/02-build-vs-buy-shared-services) ([md](https://github.com/vpeetla-ai/ai-architect-interview-playbook/blob/main/scalability-governance-tradeoffs/02-build-vs-buy-shared-services.md)) | Shared registry vs per-repo ad hoc tests |
+
 ## Related
 
 - [ORG_REVIEW_2026](https://github.com/vpeetla-ai/ai-architecture-portfolio/blob/main/docs/ORG_REVIEW_2026.md)
