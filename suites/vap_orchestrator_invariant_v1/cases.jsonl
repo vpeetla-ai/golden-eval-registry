@@ -1,0 +1,1 @@
+{"id":"vap-orch-001","kind":"router_invariant","input":{"check":"orchestrator_registry"},"expect":{"orchestrator_ids":["platform","research","architecture"],"intent_map":{"deep_research":"research","architecture_review":"architecture"}}}

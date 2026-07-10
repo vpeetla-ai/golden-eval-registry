@@ -8,12 +8,14 @@ from typing import Any
 
 SUPPORTED_KINDS = {
     "rag_answer",
+    "adversarial_security",
     "harness_qa",
     "repo_fix",
     "mission_gate",
     "graph_hitl",
     "brief_gate",
     "triage_preference",
+    "router_invariant",
 }
 
 

@@ -1,0 +1,9 @@
+{
+  "suite_id": "vap.orchestrator_invariant_v1",
+  "version": "1.0.0",
+  "kind": "router_invariant",
+  "locked": true,
+  "consumer_repos": ["venkat-ai-platform"],
+  "cases": "cases.jsonl",
+  "thresholds": {}
+}

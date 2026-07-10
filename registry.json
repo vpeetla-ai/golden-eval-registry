@@ -3,10 +3,14 @@
   "owner": "vpeetla-ai",
   "description": "Golden eval fixtures for governed agent systems",
   "suites": [
+    "aegisloop_mission_gates_v1",
+    "content_factory_graph_v1",
+    "domainforge_triage_preference_v1",
+    "enterprise_rag_adversarial_v1",
     "enterprise_rag_golden_v1",
     "loopforge_benchmark_v1",
     "loopforge_repo_fix_v1",
-    "aegisloop_mission_gates_v1",
-    "content_factory_graph_v1"
+    "sentinel_brief_gate_v1",
+    "vap_orchestrator_invariant_v1"
   ]
 }

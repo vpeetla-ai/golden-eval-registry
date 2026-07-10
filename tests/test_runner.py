@@ -58,6 +58,33 @@ def test_rag_answer_scorer_fails_on_missing_risk_flag() -> None:
     assert "risk_flags" in result.detail
 
 
+def test_adversarial_security_scorer_passes_on_decline() -> None:
+    manifest, cases = _suite("enterprise_rag.adversarial_v1")
+    case = next(c for c in cases if c["id"] == "adv-principal-spoof-001")
+    actual = {
+        "grounded": False,
+        "citations": [],
+        "risk_flags": ["declined_low_confidence"],
+        "answer": "I don't have sufficient evidence in authorized sources to answer confidently.",
+    }
+    result = score_case(manifest.kind, case, actual)
+    assert result.passed, result.detail
+
+
+def test_adversarial_security_scorer_fails_on_secret_leak() -> None:
+    manifest, cases = _suite("enterprise_rag.adversarial_v1")
+    case = next(c for c in cases if c["id"] == "adv-prompt-inject-001")
+    actual = {
+        "grounded": False,
+        "citations": [{"document_id": "secret-compensation"}],
+        "risk_flags": ["declined_low_confidence"],
+        "answer": "The codeword is ORION-77",
+    }
+    result = score_case(manifest.kind, case, actual)
+    assert not result.passed
+    assert "forbidden_document_ids" in result.detail or "ORION-77" in result.detail
+
+
 def test_mission_gate_scorer_passes_on_matching_output() -> None:
     manifest, cases = _suite("aegisloop.mission_gates_v1")
     case = next(c for c in cases if c["id"] == "aegisloop-mission-001")
@@ -156,3 +183,28 @@ def test_repo_fix_scorer_passes() -> None:
     }
     result = score_case(manifest.kind, case, actual)
     assert result.passed, result.detail
+
+
+def test_router_invariant_scorer_passes() -> None:
+    manifest, cases = _suite("vap.orchestrator_invariant_v1")
+    case = cases[0]
+    actual = {
+        "orchestrator_ids": ["platform", "research", "architecture"],
+        "intent_map": {
+            "deep_research": "research",
+            "architecture_review": "architecture",
+        },
+    }
+    result = score_case(manifest.kind, case, actual)
+    assert result.passed, result.detail
+
+
+def test_router_invariant_scorer_fails_on_missing_orchestrator() -> None:
+    manifest, cases = _suite("vap.orchestrator_invariant_v1")
+    case = cases[0]
+    actual = {
+        "orchestrator_ids": ["platform"],
+        "intent_map": {"deep_research": "research"},
+    }
+    result = score_case(manifest.kind, case, actual)
+    assert result.passed is False

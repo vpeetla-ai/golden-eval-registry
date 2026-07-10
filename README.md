@@ -37,6 +37,7 @@ This repo makes those evaluation contracts portable, reviewable, and versioned.
 ```text
 suites/
   enterprise_rag_golden_v1/
+  enterprise_rag_adversarial_v1/
   loopforge_benchmark_v1/
   loopforge_repo_fix_v1/
   aegisloop_mission_gates_v1/
@@ -67,12 +68,14 @@ provider-specific client code.
 | Kind | Consumer | Real CI gate? |
 |------|----------|----------------|
 | `rag_answer` | `enterprise_rag_platform`, AegisLoop import | ✅ `enterprise_rag_platform`'s CI checks this repo out and runs the suite against a real, isolated `RagPipeline`, failing the build on regression |
+| `adversarial_security` | `enterprise_rag_platform` | ✅ CI runs `enterprise_rag_adversarial_v1` — principal spoof + prompt-injection / jailbreak retrieval must not cite or leak restricted docs |
 | `harness_qa` | `loop-engine-agent-platform` | ✅ CI runs `loopforge_benchmark_v1` against real `AgentHarness` + MockLLM |
 | `repo_fix` | LoopForge repo-fix loop | ✅ CI runs `loopforge_repo_fix_v1` against real `run_repo_fix` |
 | `mission_gate` | `aegisloop-agentops-workbench` | ✅ `aegisloop-agentops-workbench`'s CI checks this repo out and runs the suite against the real `runtime.evaluate()` gate, failing the build on regression |
 | `graph_hitl` | `ai-content-factory` | ✅ CI runs `content_factory_graph_v1` against publish node behavior |
 | `brief_gate` | `sentinel-brief` | ✅ CI runs `sentinel_brief_gate_v1` against `evaluate_brief()` |
 | `triage_preference` | `domainforge-rag-peft` | ✅ CI runs `domainforge_triage_preference_v1` against alignment scorer |
+| `router_invariant` | `venkat-ai-platform` | ✅ VAP CI runs `vap_orchestrator_invariant_v1` against orchestrator registry |
 
 See [ADR-0002](docs/adr/0002-real-scorer-and-first-ci-gate.md) — the first suite ever actually
 executed (`enterprise_rag_golden_v1`) immediately surfaced a real bug in its own fixture,
