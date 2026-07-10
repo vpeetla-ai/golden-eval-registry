@@ -86,7 +86,7 @@ now fixed.
 | Choice | Why | Cost |
 |--------|-----|------|
 | JSON + JSONL | No runtime dependencies | Less expressive than YAML |
-| Fixture registry first, then real scorers | Safe, portable, reviewable — cross-repo execution landed for 2/6 kinds (ADR-0002) | 4 kinds still fixture-only |
+| Fixture registry first, then real scorers | Safe, portable, reviewable — 9 suite kinds gate real CI across platform repos (ADR-014+) | Registry stays dependency-light; consumers own execution adapters |
 | Locked eval files | Prevent metric cheating (by autonomous agents gaming their own loop, not one-time human review) | Updates require a disclosed, versioned review — see ADR-0002 |
 
 ## Architecture
