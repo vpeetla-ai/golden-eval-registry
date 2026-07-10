@@ -1,0 +1,34 @@
+# Nightly always-on smoke — run one consumer golden gate against registry suites (P3.1).
+name: nightly-smoke
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  sentinel-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout golden-eval-registry
+        uses: actions/checkout@v4
+      - name: Checkout sentinel-brief
+        uses: actions/checkout@v4
+        with:
+          repository: vpeetla-ai/sentinel-brief
+          path: sentinel-brief
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install registry + sentinel backend deps
+        run: |
+          pip install -e .
+          pip install -e "./sentinel-brief[dev]" || pip install -r sentinel-brief/requirements.txt || true
+          pip install pytest fastapi httpx pydantic pydantic-settings
+      - name: Run sentinel brief golden gate
+        env:
+          GOLDEN_EVAL_REGISTRY_PATH: ${{ github.workspace }}
+          PYTHONPATH: ${{ github.workspace }}/sentinel-brief/backend:${{ github.workspace }}/src
+        run: |
+          cd sentinel-brief
+          pytest backend/tests/test_golden_eval_gate.py -q
