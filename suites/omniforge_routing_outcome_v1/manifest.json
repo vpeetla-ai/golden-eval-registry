@@ -1,0 +1,11 @@
+{
+  "suite_id": "omniforge.routing_outcome_v1",
+  "version": "1.0.0",
+  "kind": "mission_gate",
+  "locked": true,
+  "consumer_repos": ["omniforge"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "quality_score_min": 80
+  }
+}

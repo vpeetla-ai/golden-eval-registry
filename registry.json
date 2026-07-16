@@ -10,6 +10,7 @@
     "enterprise_rag_golden_v1",
     "loopforge_benchmark_v1",
     "loopforge_repo_fix_v1",
+    "omniforge_routing_outcome_v1",
     "sentinel_brief_gate_v1",
     "vap_orchestrator_invariant_v1"
   ]
