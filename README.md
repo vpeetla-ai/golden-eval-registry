@@ -49,15 +49,27 @@ src/golden_eval_registry/
   runner.py
 ```
 
+## Implementation status
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Versioned golden suites | ✅ | `suites/` + `registry.json` |
+| Schema validate + score_case | ✅ | `python -m golden_eval_registry.validate` · `runner.score_*` |
+| Consumer CI gates | 🟡 | ERAG + some consumers wire suites in CI; not every suite is a live gate yet — see Suite kinds table |
+| Status table scraper | ✅ | `scripts/scrape_status_tables.py` (+ `--json` overnight artifact) |
+
 ## Status table scraper (M5)
 
 Sibling READMEs should keep an honest Implementation status section. From a machine with local clones:
 
 ```bash
 python scripts/scrape_status_tables.py
+python scripts/scrape_status_tables.py --json /tmp/ger-status-scrape.json
 ```
 
-Fails if AegisAI still claims ACF publish is Planned, or if a tracked README lacks a status section.
+Covers ACF, AegisAI, VAP, ERAG, LoopForge, AegisLoop, Sentinel, Agent FinOps, and this registry.
+
+Fails if AegisAI still claims ACF publish is Planned, ACF still claims native R2 attach is missing, or if a tracked README lacks a status section.
 
 ## Validate
 
