@@ -68,7 +68,7 @@ python scripts/scrape_status_tables.py
 python scripts/scrape_status_tables.py --json /tmp/ger-status-scrape.json
 ```
 
-Covers ACF, AegisAI, VAP, ERAG, LoopForge, AegisLoop, Sentinel, Agent FinOps, and this registry.
+Covers ACF, AegisAI, VAP, ERAG, LoopForge, AegisLoop, Sentinel, Agent FinOps, LLM gateway, semantic cache, and this registry.
 
 Fails if AegisAI still claims ACF publish is Planned, ACF still claims native R2 attach is missing, if a tracked README lacks a status section, or if a spine/AgentOps README omits `observability/status`.
 

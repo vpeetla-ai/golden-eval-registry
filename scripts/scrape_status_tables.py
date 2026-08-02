@@ -25,6 +25,8 @@ REPOS = {
     "aegisloop-agentops-workbench": HOME / "aegisloop-agentops-workbench" / "README.md",
     "sentinel-brief": HOME / "sentinel-brief" / "README.md",
     "agent-finops": HOME / "agent-finops" / "README.md",
+    "aegis-llm-gateway": HOME / "aegis-llm-gateway" / "README.md",
+    "aegis-semantic-cache": HOME / "aegis-semantic-cache" / "README.md",
     "golden-eval-registry": HOME / "golden-eval-registry" / "README.md",
 }
 
@@ -48,6 +50,8 @@ OBSERVABILITY_STATUS_REQUIRED = {
     "aegisloop-agentops-workbench",
     "sentinel-brief",
     "agent-finops",
+    "aegis-llm-gateway",
+    "aegis-semantic-cache",
 }
 OBSERVABILITY_STATUS_MARKER = re.compile(r"observability/status", re.I)
 

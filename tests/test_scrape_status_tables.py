@@ -55,10 +55,17 @@ def test_scrape_requires_observability_status_for_spine(tmp_path: Path):
         "## Implementation status\n\n| Observability status | ✅ | `/v1/observability/status` |\n",
         encoding="utf-8",
     )
+    llm = tmp_path / "llm" / "README.md"
+    llm.parent.mkdir()
+    llm.write_text(
+        "## Implementation status\n\n| Observability status | ✅ | `GET /v1/observability/status` |\n",
+        encoding="utf-8",
+    )
     summary = scrape(
         {
             "ai-content-factory": missing,
             "enterprise_rag_platform": present,
+            "aegis-llm-gateway": llm,
             "golden-eval-registry": tmp_path / "ger" / "README.md",
         }
     )
@@ -67,4 +74,5 @@ def test_scrape_requires_observability_status_for_spine(tmp_path: Path):
     by_repo = {r["repo"]: r for r in summary["results"]}
     assert by_repo["ai-content-factory"]["status"] == "fail"
     assert by_repo["enterprise_rag_platform"]["status"] == "ok"
+    assert by_repo["aegis-llm-gateway"]["status"] == "ok"
     assert by_repo["golden-eval-registry"]["status"] == "skip"
