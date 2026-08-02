@@ -37,6 +37,20 @@ FORBIDDEN = [
     ),
 ]
 
+# HTTP spine / AgentOps surfaces must document the public observability status path.
+# Library-only GER is exempt (no live /observability/status service).
+OBSERVABILITY_STATUS_REQUIRED = {
+    "ai-content-factory",
+    "aegisai-enterprise-agent-platform",
+    "venkat-ai-platform",
+    "enterprise_rag_platform",
+    "loop-engine-agent-platform",
+    "aegisloop-agentops-workbench",
+    "sentinel-brief",
+    "agent-finops",
+}
+OBSERVABILITY_STATUS_MARKER = re.compile(r"observability/status", re.I)
+
 
 def scrape(repos: dict[str, Path] | None = None) -> dict:
     repos = repos or REPOS
@@ -70,6 +84,17 @@ def scrape(repos: dict[str, Path] | None = None) -> dict:
                 entry["detail"] = label
                 print(f"FAIL {name}: {label}")
                 bad = True
+        if (
+            not bad
+            and name in OBSERVABILITY_STATUS_REQUIRED
+            and not OBSERVABILITY_STATUS_MARKER.search(text)
+        ):
+            label = "missing observability/status honesty surface in README"
+            failures.append(f"{name}: {label}")
+            entry["status"] = "fail"
+            entry["detail"] = label
+            print(f"FAIL {name}: {label}")
+            bad = True
         if not bad:
             yellow = len(re.findall(r"🟡", text))
             entry["yellow_rows"] = yellow
