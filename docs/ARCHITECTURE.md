@@ -49,6 +49,9 @@ Repo CI
 | Execution | Fixture validation | Cross-repo GitHub Actions matrix |
 | Reports | CLI summary | Markdown and badge artifacts |
 | Consumers | 5 suite families | VAP router evals, pattern trace schemas |
+| Honesty scrape | `scripts/scrape_status_tables.py` — status sections + `observability/status` on spine/AgentOps/LLM-plane READMEs | Overnight JSON artifact already supported |
+
+I’d rather fail a scrape when a README goes quiet on compose honesty than discover it in a panel. GER itself stays a library — no live `/observability/status` service here.
 
 ## Non-goals
 
