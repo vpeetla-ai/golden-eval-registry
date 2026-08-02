@@ -57,6 +57,7 @@ src/golden_eval_registry/
 | Schema validate + score_case | ✅ | `python -m golden_eval_registry.validate` · `runner.score_*` |
 | Consumer CI gates | 🟡 | ERAG + some consumers wire suites in CI; not every suite is a live gate yet — see Suite kinds table |
 | Status table scraper | ✅ | `scripts/scrape_status_tables.py` (+ `--json` overnight artifact) |
+| Observability status gate | ✅ | Spine/AgentOps READMEs must mention `observability/status` (GER library exempt) |
 
 ## Status table scraper (M5)
 
@@ -69,7 +70,7 @@ python scripts/scrape_status_tables.py --json /tmp/ger-status-scrape.json
 
 Covers ACF, AegisAI, VAP, ERAG, LoopForge, AegisLoop, Sentinel, Agent FinOps, and this registry.
 
-Fails if AegisAI still claims ACF publish is Planned, ACF still claims native R2 attach is missing, or if a tracked README lacks a status section.
+Fails if AegisAI still claims ACF publish is Planned, ACF still claims native R2 attach is missing, if a tracked README lacks a status section, or if a spine/AgentOps README omits `observability/status`.
 
 ## Validate
 
