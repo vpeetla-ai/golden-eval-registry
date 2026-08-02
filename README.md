@@ -49,6 +49,16 @@ src/golden_eval_registry/
   runner.py
 ```
 
+## Status table scraper (M5)
+
+Sibling READMEs should keep an honest Implementation status section. From a machine with local clones:
+
+```bash
+python scripts/scrape_status_tables.py
+```
+
+Fails if AegisAI still claims ACF publish is Planned, or if a tracked README lacks a status section.
+
 ## Validate
 
 ```bash
