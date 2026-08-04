@@ -7,22 +7,15 @@
 [![CI](https://github.com/vpeetla-ai/golden-eval-registry/actions/workflows/ci.yml/badge.svg)](https://github.com/vpeetla-ai/golden-eval-registry/actions/workflows/ci.yml)
 [![Org](https://img.shields.io/badge/GitHub-vpeetla--ai-blue)](https://github.com/vpeetla-ai)
 
-Versioned golden fixtures for the **vpeetla-ai governed agent stack**.
+**Job of the system:** hold versioned golden fixtures the stack's repos import and score in CI — live demos prove the systems run; these suites prove they don't quietly regress.
 
 [Case study](https://github.com/vpeetla-ai/ai-architecture-portfolio/blob/main/case-studies/golden-eval-registry.md) · [Architecture](docs/ARCHITECTURE.md) · [Repo index](https://github.com/vpeetla-ai/ai-architecture-portfolio/blob/main/docs/REPO_INDEX.md)
 
 ## What this is
 
-Live demos prove the systems run. Golden evals prove they do not regress.
+Demos show green paths. Goldens catch the scar: a fixture that never ran, a guardrail that redacts the only grounding token, a mission gate that drifted.
 
-Each platform already had local tests:
-
-- Enterprise RAG had golden retrieval queries.
-- LoopForge had benchmark questions and a repo-fix fixture.
-- AegisLoop had mission quality gates.
-- Content Factory had HITL and gateway graph tests.
-
-This repo makes those evaluation contracts portable, reviewable, and versioned.
+Each platform already had local tests. This repo makes those contracts portable, reviewable, and versioned — and `runner.py` scores real consumer output, not just YAML shape ([ADR-0002](docs/adr/0002-real-scorer-and-first-ci-gate.md)).
 
 ## Who this serves
 
