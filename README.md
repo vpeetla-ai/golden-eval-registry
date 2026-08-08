@@ -65,11 +65,17 @@ Covers ACF, AegisAI, VAP, ERAG, LoopForge, AegisLoop, Sentinel, Agent FinOps, LL
 
 Fails if AegisAI still claims ACF publish is Planned, ACF still claims native R2 attach is missing, if a tracked README lacks a status section, or if a spine/AgentOps README omits `observability/status`.
 
-## Validate
+## Stage-4 continuous eval
+
+| Tool | Purpose |
+|------|---------|
+| `scripts/promote_failure.py` | Turn a failed mission JSON into a redacted GER candidate under `suites/multi_agent_collaboration_v1/candidates/` |
+| `scripts/collaboration_drift.py` | Score persisted trajectories; fail on hard-gate / orphan / coordination drift |
+| `.github/workflows/collaboration-drift.yml` | Weekly drift check (suite trajectories + optional AegisLoop run log) |
 
 ```bash
-python -m golden_eval_registry.validate
-pytest -q
+python scripts/promote_failure.py --run path/to/mission.json
+python scripts/collaboration_drift.py --runs path/to/runs.jsonl --report /tmp/drift.json
 ```
 
 `validate.py` checks manifests and JSONL cases are well-formed. `runner.py`'s `score_case`/

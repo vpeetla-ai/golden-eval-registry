@@ -1,0 +1,73 @@
+# Weekly collaboration drift — Stage-4 continuous eval signal.
+name: collaboration-drift
+
+on:
+  schedule:
+    # Mondays 15:17 UTC — after Substack sync window
+    - cron: "17 15 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install registry
+        run: pip install -e ".[dev]"
+
+      - name: Checkout AegisLoop for fixture trajectories / optional run log
+        uses: actions/checkout@v4
+        with:
+          repository: vpeetla-ai/aegisloop-agentops-workbench
+          path: aegisloop
+          sparse-checkout: |
+            services/api/runs
+            services/api/tests/fixtures
+          sparse-checkout-cone-mode: false
+        continue-on-error: true
+
+      - name: Build trajectory corpus from locked collaboration suite
+        run: |
+          mkdir -p /tmp/collab-runs
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          cases = Path("suites/multi_agent_collaboration_v1/cases.jsonl")
+          out = Path("/tmp/collab-runs/suite_trajectories.jsonl")
+          lines = []
+          for line in cases.read_text().splitlines():
+              if not line.strip():
+                  continue
+              case = json.loads(line)
+              lines.append(json.dumps({"artifacts": {"collaboration_trajectory": case["trajectory"]}}))
+          out.write_text("\n".join(lines) + "\n")
+          print(f"wrote {len(lines)} suite trajectories")
+          PY
+
+      - name: Run drift check (suite baseline + optional live runs)
+        run: |
+          EXTRA=""
+          if [ -f aegisloop/services/api/runs/runs.jsonl ]; then
+            EXTRA="--runs aegisloop/services/api/runs/runs.jsonl"
+          fi
+          python scripts/collaboration_drift.py \
+            --runs /tmp/collab-runs/suite_trajectories.jsonl \
+            $EXTRA \
+            --report /tmp/collab-drift-report.json \
+            --max-hard-gate-rate 0.45 \
+            --max-orphan-rate 0.50
+
+      - name: Upload drift report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collab-drift-report
+          path: /tmp/collab-drift-report.json
