@@ -1,0 +1,4 @@
+# Candidates from scripts/promote_failure.py — not locked eval cases.
+# Review redaction, then promote into cases.jsonl via PR.
+*
+!.gitignore
