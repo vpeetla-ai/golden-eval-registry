@@ -301,6 +301,78 @@ def _score_router_invariant(case: dict[str, Any], actual: dict[str, Any]) -> Cas
     return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
 
 
+def _score_collaboration_scorecard(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
+    """Score a multi-agent trajectory vector (CSS / TUE / hard gates).
+
+    ``actual`` may be either ``{"trajectory": {...}}`` or the trajectory itself.
+    Fixture cases may also embed ``trajectory`` on the case for registry-local CI.
+    """
+    from golden_eval_registry.scorecard import score_trajectory
+
+    case_id = str(case["id"])
+    expect = case.get("expect") or {}
+    trajectory = actual.get("trajectory") if isinstance(actual.get("trajectory"), dict) else None
+    if trajectory is None and isinstance(actual, dict) and (
+        "outcome" in actual or "artifacts" in actual or "tool_calls" in actual
+    ):
+        trajectory = actual
+    if trajectory is None and isinstance(case.get("trajectory"), dict):
+        # Allow suite self-check: consumer may pass {} and we score the fixture trajectory.
+        trajectory = case["trajectory"]
+    if not isinstance(trajectory, dict):
+        return CaseResult(case_id, False, "missing trajectory")
+
+    scored = score_trajectory(trajectory)
+    problems: list[str] = []
+
+    if "release_ok" in expect and bool(expect["release_ok"]) != scored.release_ok:
+        problems.append(f"release_ok: expected {expect['release_ok']}, got {scored.release_ok}")
+
+    for dim, key in (
+        ("min_outcome", "outcome"),
+        ("min_coordination", "coordination"),
+        ("min_tool_use", "tool_use"),
+        ("min_economics", "economics"),
+        ("min_governance", "governance"),
+    ):
+        floor = expect.get(dim)
+        if floor is not None and scored.vector[key] < float(floor):
+            problems.append(f"{key}: expected >= {floor}, got {scored.vector[key]:.3f}")
+
+    for dim, key in (
+        ("max_outcome", "outcome"),
+        ("max_coordination", "coordination"),
+        ("max_tool_use", "tool_use"),
+    ):
+        ceiling = expect.get(dim)
+        if ceiling is not None and scored.vector[key] > float(ceiling):
+            problems.append(f"{key}: expected <= {ceiling}, got {scored.vector[key]:.3f}")
+
+    max_q = expect.get("max_quality_score")
+    if max_q is not None and scored.quality_score() > int(max_q):
+        problems.append(f"quality_score: expected <= {max_q}, got {scored.quality_score()}")
+
+    required_gates = set(expect.get("require_hard_gates") or [])
+    missing = required_gates - set(scored.hard_gate_failures)
+    if missing:
+        problems.append(f"require_hard_gates missing: {sorted(missing)}")
+
+    forbidden = set(expect.get("forbid_hard_gates") or [])
+    present = forbidden & set(scored.hard_gate_failures)
+    if present:
+        problems.append(f"forbid_hard_gates present: {sorted(present)}")
+
+    css = scored.components.get("css") or {}
+    min_orphans = expect.get("min_css_orphan_count")
+    if min_orphans is not None and css.get("orphan_count", 0) < int(min_orphans):
+        problems.append(f"orphan_count: expected >= {min_orphans}, got {css.get('orphan_count')}")
+    min_dups = expect.get("min_css_duplicate_count")
+    if min_dups is not None and css.get("duplicate_count", 0) < int(min_dups):
+        problems.append(f"duplicate_count: expected >= {min_dups}, got {css.get('duplicate_count')}")
+
+    return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
+
+
 _SCORERS: dict[str, Callable[[dict[str, Any], dict[str, Any]], CaseResult]] = {
     "rag_answer": _score_rag_answer,
     "adversarial_security": _score_adversarial_security,
@@ -311,4 +383,5 @@ _SCORERS: dict[str, Callable[[dict[str, Any], dict[str, Any]], CaseResult]] = {
     "harness_qa": _score_harness_qa,
     "repo_fix": _score_repo_fix,
     "router_invariant": _score_router_invariant,
+    "collaboration_scorecard": _score_collaboration_scorecard,
 }

@@ -1,0 +1,12 @@
+{
+  "suite_id": "multi_agent.collaboration_v1",
+  "version": "1.0.0",
+  "kind": "collaboration_scorecard",
+  "locked": true,
+  "consumer_repos": ["aegisloop-agentops-workbench", "golden-eval-registry"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "min_coordination": 0.55,
+    "min_tool_use": 0.55
+  }
+}

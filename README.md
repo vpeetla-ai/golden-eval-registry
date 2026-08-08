@@ -99,6 +99,7 @@ provider-specific client code.
 | `brief_gate` | `sentinel-brief` | ✅ CI runs `sentinel_brief_gate_v1` against `evaluate_brief()` |
 | `triage_preference` | `domainforge-rag-peft` | ✅ CI runs `domainforge_triage_preference_v1` against alignment scorer |
 | `router_invariant` | `venkat-ai-platform`, `aegisai-enterprise-agent-platform`, `agent-finops` | ✅ VAP orchestrator map · AegisAI gateway vocab/passport · FinOps outcome KPI vocab |
+| `collaboration_scorecard` | `aegisloop-agentops-workbench`, this registry | ✅ CSS / TUE vector + hard gates (contradiction, escalation bypass); suite self-scores in GER CI; AegisLoop builds live trajectories |
 
 See [ADR-0002](docs/adr/0002-real-scorer-and-first-ci-gate.md) — the first suite ever actually
 executed (`enterprise_rag_golden_v1`) immediately surfaced a real bug in its own fixture,
@@ -109,7 +110,7 @@ now fixed.
 | Choice | Why | Cost |
 |--------|-----|------|
 | JSON + JSONL | No runtime dependencies | Less expressive than YAML |
-| Fixture registry first, then real scorers | Safe, portable, reviewable — 9 suite kinds gate real CI across platform repos (ADR-014+) | Registry stays dependency-light; consumers own execution adapters |
+| Fixture registry first, then real scorers | Safe, portable, reviewable — suite kinds gate real CI across platform repos (ADR-014+) | Registry stays dependency-light; consumers own execution adapters |
 | Locked eval files | Prevent metric cheating (by autonomous agents gaming their own loop, not one-time human review) | Updates require a disclosed, versioned review — see ADR-0002 |
 
 ## Architecture

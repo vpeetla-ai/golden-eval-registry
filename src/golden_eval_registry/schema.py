@@ -16,6 +16,7 @@ SUPPORTED_KINDS = {
     "brief_gate",
     "triage_preference",
     "router_invariant",
+    "collaboration_scorecard",
 }
 
 
