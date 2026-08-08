@@ -1,0 +1,9 @@
+{
+  "suite_id": "agent_finops.outcome_invariant_v1",
+  "version": "1.0.0",
+  "kind": "router_invariant",
+  "locked": true,
+  "consumer_repos": ["agent-finops"],
+  "cases": "cases.jsonl",
+  "thresholds": {}
+}

@@ -1,0 +1,1 @@
+{"id":"aegis-gw-001","kind":"router_invariant","input":{"check":"gateway_vocab"},"expect":{"subsets":{"gateway_decisions":["allow","approval_required","block","deny","frozen"],"seed_agent_ids":["agent-refund","agent-intake-triage"],"passport_fields":["purpose","passport_expires_at","eval_baseline_id"]},"equals":{"policy_unavailable_version":"policy_unavailable"}}}
