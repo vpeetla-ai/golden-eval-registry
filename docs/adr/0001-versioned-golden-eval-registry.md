@@ -4,36 +4,43 @@
 
 Accepted — 2026-07-01
 
+## In one breath (panel)
+
+I'd put golden fixtures in one versioned registry repos can import — demos prove it runs; locked suites prove it didn't regress.
+
 ## Context
 
-The org already has evals, but they are split across platform repos:
+Evals already existed, scattered:
 
 - Enterprise RAG golden queries
 - LoopForge benchmark QA and repo-fix fixtures
-- AegisLoop mission gate tests
-- Content Factory HITL and gateway tests
+- AegisLoop mission gates
+- Content Factory HITL / gateway tests
 
-This makes portfolio-level regression discipline hard to inspect.
+Portfolio-level regression was hard to inspect. Copy-paste JSONL across repos drifts.
+
+What I refused: "we have tests in each repo" as a substitute for a shared, reviewable contract.
 
 ## Decision
 
-Create a dedicated `golden-eval-registry` repo with versioned suite manifests and JSONL cases. Consumer repos import suites and decide how to execute them locally.
+Create `golden-eval-registry` with versioned suite manifests and JSONL cases. Consumers import suites and decide how to execute them locally.
+
+**v1 honesty:** validate fixtures first; real scoring + consumer CI came in ADR-0002 — don't claim the registry "gates production" until a consumer actually runs `score_suite`.
 
 ## Consequences
 
 ### Positive
 
-- Clear source of truth for golden fixtures
-- Easier portfolio proof: demos plus eval contracts
-- Safer long-running loops because golden files are locked
+- One source of truth for golden fixtures
+- Demos plus eval contracts — both visible to a panel
+- `locked: true` suites resist autonomous agents gaming their own loop
 
 ### Negative
 
-- Requires sync discipline when consumer schemas evolve
-- v1 validates fixtures only; cross-repo execution is future work
+- Sync discipline when consumer schemas evolve
+- v1 was fixture-only until ADR-0002 wired scorers
 
 ## Follow-ups
 
-- Add VAP router and pattern trace suites
-- Add GitHub Action matrix that runs consumer repo adapters
-- Generate markdown report for portfolio badge
+- (Partial done in ADR-0002) scorers + consumer CI gates
+- Remaining kinds / matrix badge as consumers wire
