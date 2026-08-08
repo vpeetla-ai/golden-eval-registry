@@ -260,7 +260,11 @@ def _score_repo_fix(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
 
 
 def _score_router_invariant(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
-    """Stable VAP orchestrator registry invariant (no LLM call)."""
+    """Stable control-plane / router invariants (no LLM call).
+
+    Supports VAP orchestrator fields plus generic ``subsets`` / ``equals`` for
+    spine consumers (AegisAI, agent-finops).
+    """
     expect = case["expect"]
     case_id = str(case["id"])
     problems: list[str] = []
@@ -278,6 +282,20 @@ def _score_router_invariant(case: dict[str, Any], actual: dict[str, Any]) -> Cas
         if actual_map.get(intent) != orch:
             problems.append(
                 f"intent_map[{intent!r}]: expected {orch!r}, got {actual_map.get(intent)!r}"
+            )
+
+    for field, expected_items in dict(expect.get("subsets") or {}).items():
+        actual_set = set(actual.get(field) or [])
+        expected_set = set(expected_items or [])
+        if expected_set and not expected_set.issubset(actual_set):
+            problems.append(
+                f"subsets[{field}]: expected {sorted(expected_set)} ⊆ {sorted(actual_set)}"
+            )
+
+    for field, expected_val in dict(expect.get("equals") or {}).items():
+        if actual.get(field) != expected_val:
+            problems.append(
+                f"equals[{field}]: expected {expected_val!r}, got {actual.get(field)!r}"
             )
 
     return CaseResult(case_id, not problems, "; ".join(problems) or "ok")

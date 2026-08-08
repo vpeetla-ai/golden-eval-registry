@@ -55,7 +55,7 @@ src/golden_eval_registry/
 |-----------|--------|-------|
 | Versioned golden suites | ✅ | `suites/` + `registry.json` |
 | Schema validate + score_case | ✅ | `python -m golden_eval_registry.validate` · `runner.score_*` |
-| Consumer CI gates | 🟡 | ERAG + some consumers wire suites in CI; not every suite is a live gate yet — see Suite kinds table |
+| Consumer CI gates | ✅ | Spine + AgentOps consumers wire critical suites as merge gates — see Suite kinds table |
 | Status table scraper | ✅ | `scripts/scrape_status_tables.py` (+ `--json` overnight artifact) |
 | Observability status gate | ✅ | Spine/AgentOps READMEs must mention `observability/status` (GER library exempt) |
 
@@ -98,7 +98,7 @@ provider-specific client code.
 | `graph_hitl` | `ai-content-factory` | ✅ CI runs `content_factory_graph_v1` against publish node behavior |
 | `brief_gate` | `sentinel-brief` | ✅ CI runs `sentinel_brief_gate_v1` against `evaluate_brief()` |
 | `triage_preference` | `domainforge-rag-peft` | ✅ CI runs `domainforge_triage_preference_v1` against alignment scorer |
-| `router_invariant` | `venkat-ai-platform` | ✅ VAP CI runs `vap_orchestrator_invariant_v1` against orchestrator registry |
+| `router_invariant` | `venkat-ai-platform`, `aegisai-enterprise-agent-platform`, `agent-finops` | ✅ VAP orchestrator map · AegisAI gateway vocab/passport · FinOps outcome KPI vocab |
 
 See [ADR-0002](docs/adr/0002-real-scorer-and-first-ci-gate.md) — the first suite ever actually
 executed (`enterprise_rag_golden_v1`) immediately surfaced a real bug in its own fixture,
