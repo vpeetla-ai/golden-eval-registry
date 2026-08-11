@@ -3,6 +3,7 @@
   "owner": "vpeetla-ai",
   "description": "Golden eval fixtures for governed agent systems",
   "suites": [
+    "acme_embed_invariant_v1",
     "aegisai_gateway_invariant_v1",
     "aegisloop_mission_gates_v1",
     "agent_finops_outcome_invariant_v1",
