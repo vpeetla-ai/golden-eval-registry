@@ -1,0 +1,13 @@
+{
+  "suite_id": "acme.embed_invariant_v1",
+  "version": "1.0.0",
+  "kind": "router_invariant",
+  "locked": true,
+  "consumer_repos": [
+    "aegisai-enterprise-agent-platform",
+    "agent-finops",
+    "enterprise_rag_platform"
+  ],
+  "cases": "cases.jsonl",
+  "thresholds": {}
+}
