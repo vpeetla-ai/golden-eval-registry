@@ -1,9 +1,11 @@
 {
   "suite_id": "enterprise_rag.adversarial_v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "kind": "adversarial_security",
   "locked": true,
-  "consumer_repos": ["enterprise_rag_platform"],
+  "consumer_repos": [
+    "enterprise_rag_platform"
+  ],
   "cases": "cases.jsonl",
   "corpus": "corpus",
   "thresholds": {
