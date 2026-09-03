@@ -97,7 +97,7 @@ provider-specific client code.
 | `graph_hitl` | `ai-content-factory` | ✅ CI runs `content_factory_graph_v1` against publish node behavior |
 | `brief_gate` | `sentinel-brief` | ✅ CI runs `sentinel_brief_gate_v1` against `evaluate_brief()` |
 | `triage_preference` | `domainforge-rag-peft` | ✅ CI runs `domainforge_triage_preference_v1` against alignment scorer |
-| `router_invariant` | `venkat-ai-platform`, `aegisai-enterprise-agent-platform`, `agent-finops`, `react-agent-pattern` | ✅ VAP orchestrator map · AegisAI gateway vocab/passport · FinOps outcome KPI vocab · **Acme embed panel break tests** (`acme.embed_invariant_v1`) · **ReAct bounded-loop safety** (`react_agent_pattern.bounded_loop_v1` — bounded vs unbounded `max_steps`, real trials against `ReActAgent`) |
+| `router_invariant` | `venkat-ai-platform`, `aegisai-enterprise-agent-platform`, `agent-finops`, `react-agent-pattern`, `swarm-agent-pattern` | ✅ VAP orchestrator map · AegisAI gateway vocab/passport · FinOps outcome KPI vocab · **Acme embed panel break tests** (`acme.embed_invariant_v1`) · **ReAct bounded-loop safety** (`react_agent_pattern.bounded_loop_v1` — bounded vs unbounded `max_steps`, real trials against `ReActAgent`) · **Swarm fan-out vs serial** (`swarm_agent_pattern.fanout_v1` — coverage-per-round vs invocation-efficiency, real trials against `SwarmRuntime`) |
 | `collaboration_scorecard` | `aegisloop-agentops-workbench`, this registry | ✅ CSS / TUE vector + hard gates (contradiction, escalation bypass); suite self-scores in GER CI; AegisLoop builds live trajectories |
 
 See [ADR-0002](docs/adr/0002-real-scorer-and-first-ci-gate.md) — the first suite ever actually

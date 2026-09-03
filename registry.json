@@ -17,6 +17,7 @@
     "sentinel_brief_gate_v1",
     "vap_orchestrator_invariant_v1",
     "multi_agent_collaboration_v1",
-    "react_agent_bounded_loop_v1"
+    "react_agent_bounded_loop_v1",
+    "swarm_agent_fanout_v1"
   ]
 }
