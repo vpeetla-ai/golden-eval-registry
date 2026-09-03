@@ -17,6 +17,7 @@ SUPPORTED_KINDS = {
     "triage_preference",
     "router_invariant",
     "collaboration_scorecard",
+    "critique_delta_gate",
 }
 
 

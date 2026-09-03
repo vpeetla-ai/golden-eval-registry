@@ -373,6 +373,44 @@ def _score_collaboration_scorecard(case: dict[str, Any], actual: dict[str, Any])
     return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
 
 
+def _score_critique_delta_gate(case: dict[str, Any], actual: dict[str, Any]) -> CaseResult:
+    """Reflection-style gate: did critique-and-revise move the critic's own
+    score, and did the agent stay honest about its revision budget?
+
+    ``actual`` is a per-task outcome from a real `ReflectionAgent.run()` call:
+    ``score_delta`` (final critique score minus first-draft critique score),
+    ``approved_within_budget`` (whether the last attempt was approved before
+    the revision budget ran out), and ``revisions_used``.
+    """
+    expect = case["expect"]
+    case_id = str(case["id"])
+    problems: list[str] = []
+
+    min_delta = expect.get("min_score_delta")
+    if min_delta is not None and actual.get("score_delta", 0) < min_delta:
+        problems.append(f"score_delta: expected >= {min_delta}, got {actual.get('score_delta')}")
+
+    if "must_approve_within_budget" in expect:
+        expected_flag = bool(expect["must_approve_within_budget"])
+        actual_flag = bool(actual.get("approved_within_budget"))
+        if expected_flag != actual_flag:
+            problems.append(
+                f"approved_within_budget: expected {expected_flag}, got {actual_flag}"
+            )
+
+    max_revisions = expect.get("max_revisions_used")
+    if max_revisions is not None and actual.get("revisions_used", 0) > max_revisions:
+        problems.append(
+            f"revisions_used: expected <= {max_revisions}, got {actual.get('revisions_used')}"
+        )
+
+    min_final = expect.get("min_final_score")
+    if min_final is not None and actual.get("final_score", 0) < min_final:
+        problems.append(f"final_score: expected >= {min_final}, got {actual.get('final_score')}")
+
+    return CaseResult(case_id, not problems, "; ".join(problems) or "ok")
+
+
 _SCORERS: dict[str, Callable[[dict[str, Any], dict[str, Any]], CaseResult]] = {
     "rag_answer": _score_rag_answer,
     "adversarial_security": _score_adversarial_security,
@@ -384,4 +422,5 @@ _SCORERS: dict[str, Callable[[dict[str, Any], dict[str, Any]], CaseResult]] = {
     "repo_fix": _score_repo_fix,
     "router_invariant": _score_router_invariant,
     "collaboration_scorecard": _score_collaboration_scorecard,
+    "critique_delta_gate": _score_critique_delta_gate,
 }

@@ -1,0 +1,12 @@
+{
+  "suite_id": "reflection_agent.critique_delta_v1",
+  "version": "1.0.0",
+  "kind": "critique_delta_gate",
+  "locked": true,
+  "consumer_repos": ["reflection-agent-pattern"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "mean_score_delta_min": 0.0,
+    "approved_within_budget_rate_min": 0.6
+  }
+}
