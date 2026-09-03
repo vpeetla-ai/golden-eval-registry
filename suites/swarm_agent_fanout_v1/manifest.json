@@ -1,0 +1,14 @@
+{
+  "suite_id": "swarm_agent_pattern.fanout_v1",
+  "version": "1.0.0",
+  "kind": "router_invariant",
+  "locked": true,
+  "consumer_repos": ["swarm-agent-pattern"],
+  "cases": "cases.jsonl",
+  "description": "Fan-out vs. serial convergence gate for swarm-agent-pattern's SwarmRuntime. Each case is one scenario from that repo's scripts/benchmark_fanout_vs_serial.py, run for real through SwarmRuntime (fan-out, all agents propose every round) and a serial baseline built from the same SwarmAgent/Blackboard/Proposal classes (one agent proposes per round, cycling the roster), under two round-budget conditions ('matched' = same max_rounds as fanout, 'extended' = max_rounds * roster size). Agents (ExplorationAgent/RiskAgent/SynthesisAgent) are deterministic stubs -- no LLM calls, no API key, no randomness. Uses the registry's existing router_invariant scorer ('equals') rather than a new scorer kind, since router_invariant's generic equals contract already fits exact-match deterministic checks. See swarm-agent-pattern/docs/receipts/benchmark.md for full methodology and the honest reading of results (fan-out wins on rounds-to-convergence under a matched round budget; serial catches up to the same convergence_target when given an equal total invocation budget; 2 of 9 scenarios are deliberately structurally unreachable for both conditions).",
+  "thresholds": {
+    "min_fanout_convergence_rate": 0.75,
+    "min_serial_extended_convergence_rate": 0.75,
+    "structurally_unreachable_scenarios": 2
+  }
+}
