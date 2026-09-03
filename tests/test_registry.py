@@ -11,8 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_registry_validates() -> None:
     result = validate_registry(ROOT)
-    assert result["suites"] == 16
-    assert result["cases"] == 64
+    assert result["suites"] == 17
+    assert result["cases"] == 73
     assert "enterprise_rag_platform" in result["consumer_repos"]
     assert "loop-engine-agent-platform" in result["consumer_repos"]
     assert "sentinel-brief" in result["consumer_repos"]
@@ -24,11 +24,12 @@ def test_registry_validates() -> None:
     assert "aegisloop-agentops-workbench" in result["consumer_repos"]
     assert "react-agent-pattern" in result["consumer_repos"]
     assert "reflection-agent-pattern" in result["consumer_repos"]
+    assert "swarm-agent-pattern" in result["consumer_repos"]
 
 
 def test_every_manifest_is_locked_and_supported() -> None:
     manifests = iter_manifests(ROOT)
-    assert len(manifests) == 16
+    assert len(manifests) == 17
     for path in manifests:
         manifest = parse_manifest(path)
         assert manifest.locked is True
