@@ -18,6 +18,9 @@
     "vap_orchestrator_invariant_v1",
     "multi_agent_collaboration_v1",
     "react_agent_bounded_loop_v1",
-    "swarm_agent_fanout_v1"
+    "swarm_agent_fanout_v1",
+    "multi_agent_reviewer_gate_v1",
+    "plan_execute_decomposition_v1",
+    "reflection_agent_critique_delta_v1"
   ]
 }
