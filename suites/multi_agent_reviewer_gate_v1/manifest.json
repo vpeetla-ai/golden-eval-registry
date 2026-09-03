@@ -1,0 +1,14 @@
+{
+  "suite_id": "multi_agent_pattern.reviewer_gate_v1",
+  "version": "1.0.0",
+  "kind": "mission_gate",
+  "locked": true,
+  "consumer_repos": ["multi-agent-system-pattern"],
+  "cases": "cases.jsonl",
+  "thresholds": {
+    "orchestrator_complete_approval_rate_min": 1.0,
+    "single_generalist_approval_rate_max": 0.0,
+    "orchestrator_incomplete_approval_rate_max": 0.0,
+    "duplicate_role_guard_fire_rate_min": 1.0
+  }
+}
