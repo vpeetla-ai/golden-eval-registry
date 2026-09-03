@@ -1,0 +1,14 @@
+{
+  "suite_id": "react_agent_pattern.bounded_loop_v1",
+  "version": "1.0.0",
+  "kind": "router_invariant",
+  "locked": true,
+  "consumer_repos": ["react-agent-pattern"],
+  "cases": "cases.jsonl",
+  "description": "Bounded-loop safety gate for react-agent-pattern's ReActAgent. Each case is one scenario from that repo's scripts/benchmark_bounded_loop.py, run for real through ReActAgent in bounded (max_steps=5) and unbounded-surrogate (max_steps=200) mode with a deterministic ReasoningModel stub (no LLM, no API key). Uses the registry's existing router_invariant scorer ('equals') rather than a new scorer kind, since router_invariant's generic equals/subsets contract already fits exact-match deterministic checks. See react-agent-pattern/docs/receipts/benchmark.md for full methodology.",
+  "thresholds": {
+    "bounded_max_steps": 5,
+    "unbounded_max_steps": 200,
+    "min_bounded_success_rate": 0.5
+  }
+}
