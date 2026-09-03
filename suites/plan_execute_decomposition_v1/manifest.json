@@ -1,0 +1,14 @@
+{
+  "suite_id": "plan_execute_agent_pattern.decomposition_v1",
+  "version": "1.0.0",
+  "kind": "router_invariant",
+  "locked": true,
+  "consumer_repos": ["plan-execute-agent-pattern"],
+  "cases": "cases.jsonl",
+  "description": "Plan-vs-ground-truth decomposition accuracy and execution success gate for plan-execute-agent-pattern. Each case is one scenario from that repo's scripts/benchmark_plan_vs_reactive.py, run for real through the repo's actual PlanExecuteAgent.run() (src/plan_execute_agent_pattern/engine.py) and a new ReactiveBaselineAgent that reuses the same Executor/Synthesizer stub interfaces but decides one step at a time instead of planning upfront. Deterministic Planner/Executor/Synthesizer stubs, no LLM, no API key. Uses the registry's existing router_invariant scorer ('equals') rather than a new scorer kind, since router_invariant's generic equals contract already fits exact-match deterministic checks. See plan-execute-agent-pattern/docs/receipts/benchmark.md for full methodology.",
+  "thresholds": {
+    "mean_decomposition_accuracy_min": 0.85,
+    "plan_execute_success_rate_min": 0.70,
+    "reactive_success_rate_min": 0.80
+  }
+}
