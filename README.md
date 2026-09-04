@@ -28,7 +28,7 @@ Each platform already had local tests. This repo makes those contracts portable,
 ## Registry layout
 
 ```text
-suites/
+suites/                          # 19 suites, 101 cases total — see registry.json for the full list
   enterprise_rag_golden_v1/
   enterprise_rag_adversarial_v1/
   loopforge_benchmark_v1/
@@ -36,6 +36,7 @@ suites/
   aegisloop_mission_gates_v1/
   content_factory_graph_v1/
   domainforge_triage_preference_v1/
+  ...                             # + 12 more (see registry.json / Suite kinds table below)
 src/golden_eval_registry/
   schema.py
   validate.py
@@ -93,7 +94,7 @@ provider-specific client code.
 | `adversarial_security` | `enterprise_rag_platform` | ✅ CI runs `enterprise_rag_adversarial_v1` — principal spoof + prompt-injection / jailbreak retrieval must not cite or leak restricted docs |
 | `harness_qa` | `loop-engine-agent-platform` | ✅ CI runs `loopforge_benchmark_v1` against real `AgentHarness` + MockLLM |
 | `repo_fix` | LoopForge repo-fix loop | ✅ CI runs `loopforge_repo_fix_v1` against real `run_repo_fix` |
-| `mission_gate` | `aegisloop-agentops-workbench`, `multi-agent-system-pattern` | ✅ `aegisloop-agentops-workbench`'s CI checks this repo out and runs the suite against the real `runtime.evaluate()` gate, failing the build on regression · **Reviewer-gate pass rate** (`multi_agent_pattern.reviewer_gate_v1` — orchestrator+specialists+reviewer vs single-generalist, real trials against `MultiAgentOrchestrator`) |
+| `mission_gate` | `aegisloop-agentops-workbench`, `multi-agent-system-pattern`, `omniforge` | ✅ `aegisloop-agentops-workbench`'s CI checks this repo out and runs the suite against the real `runtime.evaluate()` gate, failing the build on regression · **Reviewer-gate pass rate** (`multi_agent_pattern.reviewer_gate_v1` — orchestrator+specialists+reviewer vs single-generalist, real trials against `MultiAgentOrchestrator`) · ⬜ `omniforge.routing_outcome_v1` (routing-outcome quality gate, `quality_score_min: 80`) is a real, locked fixture in this registry, but `omniforge`'s CI does not check this repo out or run it yet — not wired as a live gate |
 | `graph_hitl` | `ai-content-factory` | ✅ CI runs `content_factory_graph_v1` against publish node behavior |
 | `brief_gate` | `sentinel-brief` | ✅ CI runs `sentinel_brief_gate_v1` against `evaluate_brief()` |
 | `triage_preference` | `domainforge-rag-peft` | ✅ CI runs `domainforge_triage_preference_v1` against alignment scorer |
