@@ -57,13 +57,15 @@ flowchart LR
 
 Every edge above is a real `consumer_repos` entry read directly from a
 `suites/*/manifest.json` in this repo (19 suites total, confirmed against
-`registry.json`), not inferred from prose. `omniforge` is drawn as a dotted
-edge because `omniforge.routing_outcome_v1` (kind `mission_gate`, `manifest.json`
-declares `consumer_repos: ["omniforge"]`) exists as a real fixture in this
-registry, but `omniforge`'s own `.github/workflows/ci.yml` does not check this
-repo out or run the suite — it is not yet a live CI gate the way the
-`aegisloop-agentops-workbench` and `multi-agent-system-pattern` mission-gate
-suites are (see the README's Suite kinds table).
+`registry.json`), not inferred from prose.
+
+`omniforge` gets a dotted edge. `omniforge.routing_outcome_v1` (kind
+`mission_gate`, `manifest.json` declares `consumer_repos: ["omniforge"]`)
+exists as a real fixture in this registry — but `omniforge`'s own
+`.github/workflows/ci.yml` doesn't check this repo out or run the suite.
+It's not yet a live CI gate, the way the `aegisloop-agentops-workbench` and
+`multi-agent-system-pattern` mission-gate suites are (see the README's Suite
+kinds table).
 
 ## Design principles
 
